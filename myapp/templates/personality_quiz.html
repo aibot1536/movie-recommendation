@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">🎬 Discover Your Movie Personality</h2>
+    <form method="POST" action="{% url 'personality-quiz' %}">
+        {% csrf_token %}
+
+        <!-- Question 1 -->
+        <div class="mb-3 dark-form-group">
+            <label class="form-label text-light">1. Do you enjoy high-energy and fast-paced situations?</label>
+            <select class="form-control bg-dark text-light border-secondary" name="q1">
+                <option value="1">😐 </option>
+                <option value="2">🙂 </option>
+                <option value="3">😊 </option>
+                <option value="4">😄 </option>
+                <option value="5">😍 </option>
+            </select>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="mb-3 dark-form-group">
+            <label class="form-label text-light">2. Do you like exploring unknown places or embarking on epic journeys?</label>
+            <select class="form-control bg-dark text-light border-secondary" name="q2">
+                <option value="1">😐 </option>
+                <option value="2">🙂 </option>
+                <option value="3">😊 </option>
+                <option value="4">😄 </option>
+                <option value="5">😍 </option>
+            </select>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="mb-3 dark-form-group">
+            <label class="form-label text-light">3. Do you enjoy animated or imaginative visual storytelling?</label>
+            <select class="form-control bg-dark text-light border-secondary" name="q3">
+                <option value="1">😐 </option>
+                <option value="2">🙂 </option>
+                <option value="3">😊 </option>
+                <option value="4">😄 </option>
+                <option value="5">😍 </option>
+            </select>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="mb-3 dark-form-group">
+            <label class="form-label text-light">4. Do you appreciate humor and light-hearted stories?</label>
+            <select class="form-control bg-dark text-light border-secondary" name="q4">
+                <option value="1">😐 </option>
+                <option value="2">🙂 </option>
+                <option value="3">😊 </option>
+                <option value="4">😄 </option>
+                <option value="5">😍 </option>
+            </select>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="mb-3 dark-form-group">
+            <label class="form-label text-light">5. Do you enjoy solving mysteries or uncovering hidden truths?</label>
+            <select class="form-control bg-dark text-light border-secondary" name="q5">
+                <option value="1">😐 </option>
+                <option value="2">🙂 </option>
+                <option value="3">😊 </option>
+                <option value="4">😄 </option>
+                <option value="5">😍 </option>
+            </select>
+        </div>
+
+        <!-- Question 6 -->
+        <div class="mb-3 dark-form-group">
+            <label class="form-label text-light">6. Are you drawn to emotional and dramatic narratives?</label>
+            <select class="form-control bg-dark text-light border-secondary" name="q6">
+                <option value="1">😐 </option>
+                <option value="2">🙂 </option>
+                <option value="3">😊 </option>
+                <option value="4">😄 </option>
+                <option value="5">😍 </option>
+            </select>
+        </div>
+
+        <!-- Question 7 -->
+        <div class="mb-3 dark-form-group">
+            <label class="form-label text-light">7. Are you fascinated by futuristic or scientific concepts?</label>
+            <select class="form-control bg-dark text-light border-secondary" name="q7">
+                <option value="1">😐 </option>
+                <option value="2">🙂 </option>
+                <option value="3">😊 </option>
+                <option value="4">😄 </option>
+                <option value="5">😍 </option>
+            </select>
+        </div>
+
+        <!-- Question 8 -->
+        <div class="mb-3 dark-form-group">
+            <label class="form-label text-light">8. Do you like feeling scared or watching suspenseful content?</label>
+            <select class="form-control bg-dark text-light border-secondary" name="q8">
+                <option value="1">😐 </option>
+                <option value="2">🙂 </option>
+                <option value="3">😊 </option>
+                <option value="4">😄 </option>
+                <option value="5">😍 </option>
+            </select>
+        </div>
+
+        <!-- Question 9 -->
+        <div class="mb-3 dark-form-group">
+            <label class="form-label text-light">9. Do you enjoy learning about real-life events or history?</label>
+            <select class="form-control bg-dark text-light border-secondary" name="q9">
+                <option value="1">😐 </option>
+                <option value="2">🙂 </option>
+                <option value="3">😊 </option>
+                <option value="4">😄 </option>
+                <option value="5">😍 </option>
+            </select>
+        </div>
+
+        <!-- Question 10 -->
+        <div class="mb-3 dark-form-group">
+            <label class="form-label text-light">10. Do you like musicals or stories centered around music?</label>
+            <select class="form-control bg-dark text-light border-secondary" name="q10">
+                <option value="1">😐 </option>
+                <option value="2">🙂 </option>
+                <option value="3">😊 </option>
+                <option value="4">😄 </option>
+                <option value="5">😍 </option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">🎥 Get Movie Genres</button>
+    </form>
+</div>
+<div class="main-container">
+{% if recommendations %}
+<div class="recommendations">
+    <div class="grid-container">
+        {% for movie in recommendations %}
+            <div class="movie-card">
+                <a href="{% url 'movie_details' movie.title %}">
+                    <img src="{{ movie.poster }}" alt="{{ movie.title }}">
+                    <p>{{ movie.title }}</p>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+</div>
+{% endblock %}

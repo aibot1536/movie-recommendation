@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">Manage Genre Subscriptions</h2>
+
+  <form method="post">
+    {% csrf_token %}
+
+    <div class="mb-3">
+      <h5 class="text-success">Subscribed Genres</h5>
+      <div class="d-flex flex-wrap gap-2">
+        {% for genre in user_subscriptions %}
+          <label class="badge bg-success position-relative genre-pill" onclick="toggleGenre(this)">
+            {{ genre.name }}
+            <input type="checkbox" name="genres" value="{{ genre.id }}" checked hidden>
+          </label>
+        {% empty %}
+          <p class="text-muted">No subscriptions yet.</p>
+        {% endfor %}
+      </div>
+    </div>
+
+    <hr class="bg-light">
+
+    <div class="mb-3">
+      <h5 class="text-secondary">Unsubscribed Genres</h5>
+      <div class="d-flex flex-wrap gap-2">
+        {% for genre in genres %}
+          {% if genre not in user_subscriptions %}
+            <label class="badge bg-secondary position-relative genre-pill" onclick="toggleGenre(this)">
+              {{ genre.name }}
+              <input type="checkbox" name="genres" value="{{ genre.id }}" hidden>
+            </label>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-4">Save Changes</button>
+  </form>
+</div>
+
+<script>
+  function toggleGenre(label) {
+    const checkbox = label.querySelector("input[type='checkbox']");
+    checkbox.checked = !checkbox.checked;
+
+    // Toggle visual style
+    if (checkbox.checked) {
+      label.classList.remove("bg-secondary");
+      label.classList.add("bg-success");
+    } else {
+      label.classList.remove("bg-success");
+      label.classList.add("bg-secondary");
+    }
+  }
+</script>
+{% endblock %}

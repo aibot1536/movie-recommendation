@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+<h2>Rated Movies</h2>
+<div class="rated-container">
+    {% for item in rated_movies %}
+      <div class="rated-card">
+        <a href="{% url 'movie_details' item.movie.title %}">
+          <img src="{{ item.movie.poster }}" alt="{{ item.movie.title }}">
+          <p>{{ item.movie.title }}</p>
+        </a>
+      </div>
+    {% empty %}
+      <p>No rated movies.</p>
+    {% endfor %}
+  </div>
+{% endblock %}

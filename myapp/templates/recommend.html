@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="main-container">
+    <h2>Recommendations</h2>
+
+    {% if recommendations %}
+    <div class="recommendations">
+        <div class="grid-container">
+            {% for movie in recommendations %}
+                <div class="movie-card">
+                    <a href="{% url 'movie_details' movie.title %}">
+                        <img src="{{ movie.poster }}" alt="{{ movie.title }}">
+                        <p>{{ movie.title }}</p>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    <br/><br/><br/><br/>
+    <h2>Recommendations Based On Cast</h2>
+
+    {% if recommendations2 %}
+    <div class="recommendations">
+        <div class="grid-container">
+            {% for movie in recommendations2 %}
+                <div class="movie-card">
+                    <a href="{% url 'movie_details' movie.title %}">
+                        <img src="{{ movie.poster }}" alt="{{ movie.title }}">
+                        <p>{{ movie.title }}</p>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

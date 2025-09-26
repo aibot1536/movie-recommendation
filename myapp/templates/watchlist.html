@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+<h2>Watch List</h2>
+<div class="rated-container">
+    {% for item in watch_list %}
+      <div class="rated-card">
+        <a href="{% url 'movie_details' item.movie.title %}">
+          <img src="{{ item.movie.poster }}" alt="{{ item.movie.title }}">
+          <p>{{ item.movie.title }}</p>
+        </a>
+      </div>
+    {% empty %}
+      <p>Watch List is Empty.</p>
+    {% endfor %}
+  </div>
+{% endblock %}

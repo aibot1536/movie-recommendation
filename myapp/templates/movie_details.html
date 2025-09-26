@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <div class="movie-detail-container">
+    <div class="movie-poster">
+      <img src="{{ poster }}" alt="{{ title }}">
+    </div>
+
+    <div class="movie-info">
+      <h1>{{ title }}</h1>
+      <p><strong>Genre:</strong> {{ genre }}</p>
+      <p><strong>Director:</strong> {{ director }}</p>
+      <p><strong>Cast:</strong> {{ actors }}</p>
+      <p><strong>IMDB Rating:</strong> ⭐ {{ imdb_rating }}</p>
+      <p><strong>Released:</strong> {{ released }}</p>
+      <p><strong>Runtime:</strong> {{ runtime }}</p>
+      <p class="movie-details"><strong>Plot:</strong> {{ plot }}</p>
+      <a href="/" class="back-button">🔙 Back to Home</a>
+    </div>
+
+    {% if user.is_authenticated %}
+      <form method="POST">
+        {% csrf_token %}
+        <label for="rating">Rate this movie:</label>
+        <select name="rating" id="rating">
+          <option value="">-- Select --</option>
+          <option value="1" {% if user_rating == "1" %}selected{% endif %}>⭐</option>
+          <option value="2" {% if user_rating == "2" %}selected{% endif %}>⭐⭐</option>
+          <option value="3" {% if user_rating == "3" %}selected{% endif %}>⭐⭐⭐</option>
+          <option value="4" {% if user_rating == "4" %}selected{% endif %}>⭐⭐⭐⭐</option>
+          <option value="5" {% if user_rating == "5" %}selected{% endif %}>⭐⭐⭐⭐⭐</option>
+          {% if user_rating %}
+            <option value="remove">Remove Rating</option>
+          {% endif %}
+        </select>
+        <button type="submit">Submit</button>
+      </form>
+      <form method="POST" style="margin-top: 10px;">
+        {% csrf_token %}
+        {% if in_watchlist %}
+          <button type="submit" name="remove_watchlist" value="1">❌ Remove from Watchlist</button>
+        {% else %}
+          <button type="submit" name="add_watchlist" value="1">➕ Add to Watchlist</button>
+        {% endif %}
+      </form>
+    {% else %}
+      <em>Login to rate this movie.</em>
+    {% endif %}
+  </div>
+  <div class="main-container">
+    <h1>Recommendations</h1>
+    {% if recommendations %}
+    <div class="recommendations">
+        <div class="grid-container">
+            {% for movie in recommendations %}
+                <div class="movie-card">
+                    <a href="{% url 'movie_details' movie.title %}">
+                        <img src="{{ movie.poster }}" alt="{{ movie.title }}">
+                        <p>{{ movie.title }}</p>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div> 
+{% endblock %}
